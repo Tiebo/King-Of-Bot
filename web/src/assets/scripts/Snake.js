@@ -8,8 +8,8 @@ export class Snake extends GameObject {
         this.id = info.id;
         this.color = info.color;
         this.gamemap = gamemap;
-        //cells[0] 存放蛇头
-        this.cells = [new Cell(info.r, info.c)];
+
+        this.cells = [new Cell(info.r, info.c)];//cells[0] 存放蛇头
         this.next_cell = null;
         this.speed = 3.5;
         this.direction = -1; // -1表示没有指令，0、1、2、3表示上右下左
@@ -35,7 +35,7 @@ export class Snake extends GameObject {
             [-1, 1],
             [1, 1],
             [1, -1],
-        ]
+        ];
     }
 
     start() {
