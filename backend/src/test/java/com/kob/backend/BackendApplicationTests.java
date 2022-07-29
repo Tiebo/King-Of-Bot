@@ -10,7 +10,7 @@ class BackendApplicationTests {
     @Test
     void contextLoads() {
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        System.out.println(passwordEncoder.encode("padmin"));
+        System.out.println(passwordEncoder.encode("ptiebo"));
     }
 
 }
