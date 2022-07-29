@@ -23,40 +23,39 @@ public class RegisterServiceImpl implements RegisterService {
     @Override
     public Map<String, String> register(String username, String password, String confirmPassword) {
         Map<String, String> map = new HashMap<>();
-        String error = "error_message";
-        if (username == null) {
-            map.put(error, "用户名不能为空");
+        if (username == null || username.equals("")) {
+            map.put("error_message", "用户名不能为空");
             return map;
         }
-        if (password == null || confirmPassword == null) {
-            map.put(error, "密码不能为空");
+        if (password == null || confirmPassword == null || password.equals("") || confirmPassword.equals("")) {
+            map.put("error_message", "密码不能为空");
             return map;
         }
         if (!password.equals(confirmPassword)) {
-            map.put(error, "俩次密码不痛");
+            map.put("error_message", "俩次密码不同");
             return map;
         }
         username = username.trim();
         if (username.length() > 100) {
-            map.put(error, "用户名长度不能大于100");
+            map.put("error_message", "用户名长度不能大于100");
             return map;
         }
         if (password.length() > 100) {
-            map.put(error, "密码长度不能大于100");
+            map.put("error_message", "密码长度不能大于100");
             return map;
         }
         QueryWrapper<User> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("username", username);
         List<User> users = userMapper.selectList(queryWrapper);
         if (!users.isEmpty()) {
-            map.put(error, "用户名已存在");
+            map.put("error_message", "用户名已存在");
             return map;
         }
         String encodePassword = passwordEncoder.encode(password);
         String photo = "https://cdn.acwing.com/media/user/profile/photo/184248_lg_6ff08d15d0.jpg";
         User user = new User(null, username, encodePassword, photo);
         userMapper.insert(user);
-        map.put(error, "Success!");
+        map.put("error_message", "success");
         return map;
     }
 }
