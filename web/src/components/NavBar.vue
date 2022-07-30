@@ -10,13 +10,13 @@
             </router-link>
           </li>
           <li class="nav-item">
-            <router-link :class="route_name === 'ranklist_index' ? 'nav-link active' : 'nav-link'"
-                         :to="{name : 'ranklist_index'}">对局列表
+            <router-link :class="route_name === 'record_index' ? 'nav-link active' : 'nav-link'"
+                         :to="{name : 'record_index'}">对局列表
             </router-link>
           </li>
           <li class="nav-item">
-            <router-link :class="route_name === 'record_index' ? 'nav-link active' : 'nav-link'"
-                         :to="{name : 'record_index'}">排行榜
+            <router-link :class="route_name === 'ranklist_index' ? 'nav-link active' : 'nav-link'"
+                         :to="{name : 'ranklist_index'}">排行榜
             </router-link>
           </li>
         </ul>
@@ -24,6 +24,7 @@
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
                aria-expanded="false">
+               <img :src="$store.state.user.photo" class="img-fluid">
               {{ $store.state.user.username }}
             </a>
             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -39,7 +40,7 @@
             </ul>
           </li>
         </ul>
-        <ul class="navbar-nav" v-else>
+        <ul class="navbar-nav" v-else-if="!$store.state.user.pulling_info">
           <li class="nav-item">
             <router-link :class="route_name === 'user_account_login' ? 'nav-link active' : 'nav-link'"
                          :to="{name : 'user_account_login'}">登录
@@ -81,4 +82,9 @@ export default {
 </script>
 
 <style scoped>
+img{
+    border-radius: 50%;
+    margin-right: 5px;
+    width: 30px;
+}
 </style>
