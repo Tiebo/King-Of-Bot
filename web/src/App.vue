@@ -1,6 +1,6 @@
 <template>
-  <NavBar/>
-  <router-view/>
+  <NavBar />
+  <router-view />
 </template>
 
 <script>
@@ -17,10 +17,9 @@ export default {
 </script>
 
 <style>
-
 body {
   background: url("./assets/images/background.png") no-repeat;
   background-size: cover;
+  position: relative;
 }
-
 </style>

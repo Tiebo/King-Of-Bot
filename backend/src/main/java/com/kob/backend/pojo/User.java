@@ -10,14 +10,33 @@ public class User {
     private String password;
 
     private String photo;
-    public User() {
-    }
 
-    public User(Integer id, String username, String password, String photo) {
+    private String description;
+
+    public User(Integer id, String username, String password, String photo, String description) {
         this.id = id;
         this.username = username;
         this.password = password;
         this.photo = photo;
+        this.description = description;
+    }
+
+    public User(int id, String username, String photo, String description) {
+        this.id = id;
+        this.photo = photo;
+        this.username = username;
+        this.description = description;
+    }
+
+    public User() {
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public String getPhoto() {

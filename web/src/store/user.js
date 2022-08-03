@@ -6,6 +6,7 @@ export default {
         username: "",
         photo: "",
         token: "",
+        description: "",
         is_login: false,
         pulling_info: true,
     },
@@ -96,7 +97,34 @@ export default {
         logout(context) {
             localStorage.removeItem("jwt_token");
             context.commit("logout");
+        },
+        update_password(context, data) {
+            $.ajax({
+                type: "POST",
+                url: "http://localhost:3000/user/account/update/password/",
+                data: {
+                    oldPassword: data.old_password,
+                    newPassword: data.new_password,
+                    confirmPassword: data.confirm_password,
+                },
+                headers: {
+                    authorization: "Bearer " + context.state.token,
+                },
+                success(resp) {
+                    if (resp.error_message === "success") {
+                        context.commit("updateToken", resp.token);
+                        localStorage.setItem("jwt_token", resp.token);
+                        data.success(resp);
+                    } else {
+                        data.error(resp);
+                    }
+                },
+                error(resp) {
+                    data.error(resp);
+                },
+            });
         }
+
     },
     modules: {}
 }
