@@ -1,6 +1,6 @@
 <template>
   <ContentField v-if="!$store.state.user.pulling_info">
-    <div class="row justify-content-md-center" >
+    <div class="row justify-content-md-center">
       <div class="col-3">
         <form @submit.prevent="login">
           <div class="mb-3">
@@ -21,8 +21,8 @@
 
 <script>
 import ContentField from "@/components/ContentField";
-import {useStore} from 'vuex';
-import {ref} from 'vue';
+import { useStore } from 'vuex';
+import { ref } from 'vue';
 import router from "@/router/index";
 
 export default {
@@ -48,7 +48,7 @@ export default {
         }
       })
     } else {
-          store.commit("updatePullingInfo", false);
+      store.commit("updatePullingInfo", false);
     }
 
     const login = () => {
@@ -59,7 +59,7 @@ export default {
         success() {
           store.dispatch("getInfo", {
             success() {
-              router.push({name: 'home'});
+              router.push({ name: 'home' });
             }
           })
         },

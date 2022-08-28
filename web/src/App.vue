@@ -5,7 +5,6 @@
 
 <script>
 import NavBar from "./components/NavBar.vue";
-
 export default {
   name: "App",
   components: {
@@ -20,6 +19,7 @@ export default {
 body {
   background: url("./assets/images/background.png") no-repeat;
   background-size: cover;
-  position: relative;
+  background-attachment: fixed;
+  background-position: center;
 }
 </style>

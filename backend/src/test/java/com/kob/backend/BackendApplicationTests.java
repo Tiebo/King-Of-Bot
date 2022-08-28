@@ -13,8 +13,6 @@ class BackendApplicationTests {
 
     @Test
     void contextLoads() {
-        String aaa = passwordEncoder.encode("aaa");
-        System.out.println(aaa);
     }
-
 }
+

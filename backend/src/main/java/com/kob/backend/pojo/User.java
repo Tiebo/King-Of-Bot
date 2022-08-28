@@ -73,10 +73,12 @@ public class User {
 
     @Override
     public String toString() {
-        return "t_user{" +
+        return "User{" +
                 "id=" + id +
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
+                ", photo='" + photo + '\'' +
+                ", description='" + description + '\'' +
                 '}';
     }
 }

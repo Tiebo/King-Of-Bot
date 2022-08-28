@@ -1,19 +1,21 @@
-import {GameObject} from "./GameObject";
-import {Wall} from "@/assets/scripts/Wall";
-import {Snake} from "@/assets/scripts/Snake";
+import { GameObject } from "./GameObject";
+import { Wall } from "@/assets/scripts/Wall";
+import { Snake } from "@/assets/scripts/Snake";
 
 export class GameMap extends GameObject {
-    constructor(ctx, parent) {
+    constructor(ctx, parent, store) {
         super();
 
         this.ctx = ctx;
         this.parent = parent;
+        this.store = store;
+
         this.L = 0; //一个单位的长度
 
         this.rows = 13;
-        this.cols = 13;
+        this.cols = 14;
 
-        this.inner_walls_count = 15;
+        this.inner_walls_count = 20;
         this.walls = [];
 
         this.snakes = [
@@ -36,26 +38,25 @@ export class GameMap extends GameObject {
 
     add_listening_events() {
         this.ctx.canvas.focus();
-
-        const [snake0, snake1] = this.snakes;
         this.ctx.canvas.addEventListener("keydown", e => {
-            if (e.key === 'w') snake0.set_direction(0);
-            else if (e.key === 'd') snake0.set_direction(1);
-            else if (e.key === 's') snake0.set_direction(2);
-            else if (e.key === 'a') snake0.set_direction(3);
-            else if (e.key === 'ArrowUp') snake1.set_direction(0);
-            else if (e.key === 'ArrowRight') snake1.set_direction(1);
-            else if (e.key === 'ArrowDown') snake1.set_direction(2);
-            else if (e.key === 'ArrowLeft') snake1.set_direction(3);
+            let d = -1;
+            if (e.key === 'w') d = 0;
+            else if (e.key === 'd') d = 1;
+            else if (e.key === 's') d = 2;
+            else if (e.key === 'a') d = 3;
+
+            if (d >= 0 && d <= 3) {
+                this.store.state.pk.socket.send(JSON.stringify({
+                    event: "move",
+                    direction: d,
+                }))
+            }
         });
     }
 
 
     start() {
-        for (let i = 0; i < 1000; i++) {
-            if (this.create_walls())
-                break;
-        }
+        this.create_walls();
         this.add_listening_events();
     }
 
@@ -95,54 +96,8 @@ export class GameMap extends GameObject {
         }
     }
 
-    check_connectivity(g, sx, sy, tx, ty) {
-        if (sx === tx && sy === ty) return true;
-        g[sx][sy] = true;
-
-        let dx = [-1, 0, 1, 0], dy = [0, 1, 0, -1];
-        for (let i = 0; i < 4; i++) {
-            let x = sx + dx[i], y = sy + dy[i];
-            if (!g[x][y] && this.check_connectivity(g, x, y, tx, ty))
-                return true;
-        }
-    }
-
     create_walls() {
-        const g = []; //创建一个bool数组，判断当前位置是否有墙
-        //初始化
-        for (let r = 0; r < this.rows; r++) {
-            g[r] = [];
-            for (let c = 0; c < this.cols; c++) {
-                g[r][c] = false;
-            }
-        }
-        // 给四周加上障碍物
-        for (let r = 0; r < this.rows; r++) {
-            //(r, 0)和(r, this.cols - 1)分别表示每行最左与最右
-            g[r][0] = g[r][this.cols - 1] = true;
-        }
-        for (let c = 0; c < this.cols; c++) {
-            //(0, c)和(this.rows - 1, c)分别表示每行最上与最下
-            g[0][c] = g[this.rows - 1][c] = true;
-        }
-        //创建随机障碍物
-        for (let i = 0; i < this.inner_walls_count; i++) {
-            for (let j = 0; j < 1000; j++) {
-                let r = parseInt(Math.random() * this.rows);
-                let c = parseInt(Math.random() * this.cols);
-                if (g[r][c] || g[this.cols - 1 - r][this.rows - 1 - c]) continue;
-                if (r === this.rows - 2 && c === 1 || c === this.cols - 2 && 1)
-                    continue;
-                g[r][c] = g[this.cols - 1 - r][this.rows - 1 - c] = true;
-                break;
-            }
-        }
-        //深层拷贝
-        const copy_g = JSON.parse(JSON.stringify(g));
-        //得到连通路
-        if (!this.check_connectivity(copy_g, this.rows - 2, 1, 1, this.cols - 2))
-            return false;
-
+        const g = this.store.state.pk.gameMap;
         for (let r = 0; r < this.rows; r++) {
             for (let c = 0; c < this.cols; c++) {
                 if (g[r][c]) {
