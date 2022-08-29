@@ -52,6 +52,7 @@ export default {
           if (data.loser === "all" || data.loser === "B") {
             snake1.status = "die";
           }
+          store.commit("updateLoser", data.loser);
         }
       }
       socket.onclose = () => {

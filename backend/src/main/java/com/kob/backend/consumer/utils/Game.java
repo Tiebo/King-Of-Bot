@@ -2,8 +2,10 @@ package com.kob.backend.consumer.utils;
 
 import com.alibaba.fastjson.JSONObject;
 import com.kob.backend.consumer.WebSocketServer;
+import com.kob.backend.pojo.Record;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.locks.ReentrantLock;
@@ -25,6 +27,7 @@ public class Game extends Thread {
     private ReentrantLock lock = new ReentrantLock();
     private String status = "playing"; // playing -> finished
     private String loser = ""; // all: 平局, A -> B
+
 
     public Game(int rows, int cols, int inner_walls_count, int idA, int idB) {
         this.rows = rows;
@@ -151,6 +154,7 @@ public class Game extends Thread {
         JSONObject resp = new JSONObject();
         resp.put("event", "result");
         resp.put("loser", loser);
+        saveToDatabase();
         sendAllMessage(resp.toJSONString());
     }
 
@@ -208,6 +212,34 @@ public class Game extends Thread {
                 loser = "B";
             }
         }
+    }
+    private String getMapString() {
+        StringBuilder res = new StringBuilder();
+        for (int i = 0; i < rows; i ++) {
+            for (int j = 0; j < cols; j ++) {
+                res.append(g[i][j]);
+            }
+        }
+        return res.toString();
+    }
+    private void saveToDatabase() {
+
+        Record record = new Record(
+                null,
+                playerA.getId(),
+                playerA.getSx(),
+                playerA.getSy(),
+                playerB.getId(),
+                playerB.getSx(),
+                playerB.getSy(),
+                playerA.getStepString(),
+                playerB.getStepString(),
+                getMapString(),
+                loser,
+                new Date()
+        );
+
+        WebSocketServer.recordMapper.insert(record);
     }
     @Override
     public void run() {

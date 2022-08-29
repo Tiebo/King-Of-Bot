@@ -2,18 +2,21 @@
   <div class="playground">
     <GameMap v-if="$store.state.pk.status === 'playing'" />
     <MatchGround v-if="$store.state.pk.status === 'matching'" />
+    <ResultBoard v-if="$store.state.pk.loser !== 'none'" />
   </div>
 </template>
 
 <script>
 import GameMap from "@/components/GameMap";
 import MatchGround from "./MatchGround.vue";
+import ResultBoard from "./ResultBoard.vue";
 
 export default {
   name: "PlayGround",
   components: {
     GameMap,
-    MatchGround
+    MatchGround,
+    ResultBoard,
   }
 }
 </script>

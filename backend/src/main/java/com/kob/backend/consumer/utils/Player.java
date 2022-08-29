@@ -15,10 +15,17 @@ public class Player {
         return step % 3 == 1;
     }
 
+    public String getStepString() {
+        StringBuilder res = new StringBuilder();
+        for (int d: steps) {
+            res.append(d);
+        }
+        return res.toString();
+    }
     public List<Cell> getCells() {
         List<Cell> res = new ArrayList<>();
 
-        int[] dx = {-1, 0, 1, 0}, dy = {0, 1, 0 ,-1};
+        int[] dx = {-1, 0, 1, 0}, dy = {0, 1, 0,-1};
         int x = sx, y = sy;
         res.add(new Cell(x, y));
         int step = 0;
