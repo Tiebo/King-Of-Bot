@@ -90,8 +90,8 @@
                                 placeholder="请输入bot的标题" />
                             </div>
                             <div class="mb-3">
-                              <label for="rating" class="form-label">天梯分</label>
-                              <input type="text" readonly id="rating" class="form-control" :value="bot.rating">
+                              <label for="rating" class="form-label">用户天梯分</label>
+                              <input type="text" readonly id="rating" class="form-control" :value="rating">
                             </div>
                             <div class="mb-3">
                               <label for="bot-description" class="form-label">简介</label>
@@ -170,6 +170,7 @@ export default {
 
     const store = useStore();
     let bots = ref([]);
+    let rating = ref('');
     let botAdd = reactive({
       title: "",
       description: "",
@@ -186,8 +187,10 @@ export default {
           Authorization: "Bearer " + store.state.user.token,
         },
         success(resp) {
-          if (resp.error_message === "success")
+          if (resp.error_message === "success") {
             bots.value = resp.bot;
+            rating.value = resp.rating;
+          }
         },
       });
     };
@@ -272,6 +275,7 @@ export default {
       add_bot,
       remove_bot,
       update_bot,
+      rating,
     };
   },
 };
