@@ -5,9 +5,19 @@ import java.util.List;
 
 public class Player {
     private Integer id;
+    private Integer botId; // -1 表示亲自出马， 否则为AI
+    private String botCode;
     private Integer sx;
     private Integer sy;
     private List<Integer> steps;
+
+    public Integer getBotId() {
+        return botId;
+    }
+
+    public void setBotId(Integer botId) {
+        this.botId = botId;
+    }
 
     private boolean check_tail_increasing(int step) {
         //检验当前回合，蛇是否会变长
@@ -44,11 +54,22 @@ public class Player {
     public Player() {
     }
 
-    public Player(Integer id, Integer sx, Integer sy, List<Integer> steps) {
+
+    public Player(Integer id,Integer botId,String botCode, Integer sx, Integer sy, List<Integer> steps) {
         this.id = id;
         this.sx = sx;
+        this.botId = botId;
+        this.botCode = botCode;
         this.sy = sy;
         this.steps = steps;
+    }
+
+    public String getBotCode() {
+        return botCode;
+    }
+
+    public void setBotCode(String botCode) {
+        this.botCode = botCode;
     }
 
     @Override

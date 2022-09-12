@@ -1,11 +1,18 @@
 <template>
     <div class="row matching">
-        <div class="col-6" style="text-align:center;">
+        <div class="col-4" style="text-align:center;">
             <img :src="$store.state.user.photo" alt="">
             <div class="username">{{ $store.state.user.username }}</div>
         </div>
-
-        <div class="col-6" style="text-align:center;">
+        <div class="col-4">
+            <div class="user-select-bot">
+                <select v-model="select_bot" class="form-select" aria-label="Default select example">
+                    <option value=-1 selected>亲自出马</option>
+                    <option v-for="bot in bots" :key="bot.id" :value="bot.id">{{bot.title}}</option>
+                </select>
+            </div>
+        </div>
+        <div class="col-4" style="text-align:center;">
             <img :src="$store.state.pk.opponent_photo" alt="">
             <div class="username">{{ $store.state.pk.opponent_username }}</div>
         </div>
@@ -20,18 +27,23 @@
 <script>
 import { ref } from 'vue';
 import { useStore } from 'vuex';
+import $ from 'jquery'
+
 export default {
     name: " MatchGround ",
     components: {
     },
     setup() {
         const store = useStore();
-
+        let bots = ref([]);
         let nowPkStatus = ref('开始匹配');
+        let select_bot = ref(-1);
         const ToPlaying = () => {
             if (nowPkStatus.value === "开始匹配") {
                 nowPkStatus.value = '取消';
+                console.log(select_bot.value);
                 store.state.pk.socket.send(JSON.stringify({
+                    bot_id: select_bot.value,
                     event: "start-matching"
                 }));
             } else {
@@ -42,9 +54,28 @@ export default {
                 store.commit("updateOpponentToInit");
             }
         }
+        const refresh_bots = () => {
+            $.ajax({
+                type: "GET",
+                url: "http://localhost:3000/user/bot/getlist/",
+                headers: {
+                    Authorization: "Bearer " + store.state.user.token,
+                },
+                success(resp) {
+                    if (resp.error_message === "success") {
+                        bots.value = resp.bot;
+                    }
+                },
+            });
+        };
+        refresh_bots();
+
         return {
+            refresh_bots,
             ToPlaying,
-            nowPkStatus
+            nowPkStatus,
+            bots,
+            select_bot
         }
     },
 
@@ -53,6 +84,15 @@ export default {
 
 
 <style scoped>
+div.user-select-bot {
+    padding-top: 20vh;
+}
+
+div.user-select-bot>select {
+    width: 60%;
+    margin: 0 auto;
+}
+
 .matching {
     background-color: rgba(73, 68, 61, 0.5);
 }

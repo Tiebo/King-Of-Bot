@@ -16,7 +16,6 @@ export default {
     const store = useStore();
     const websocketUrl = `ws://localhost:3000/websocket/${store.state.user.token}`;
     let socket = null;
-
     onMounted(() => {
       socket = new WebSocket(websocketUrl);
       socket.onopen = () => {
@@ -61,6 +60,7 @@ export default {
 
     onUnmounted(() => {
       socket.close();
+      store.commit("updateLoser", "none");
       store.commit("updateStatus", "matching");
       store.commit("updateOpponentToInit");
     })
@@ -70,4 +70,5 @@ export default {
 </script>
 
 <style scoped>
+
 </style>

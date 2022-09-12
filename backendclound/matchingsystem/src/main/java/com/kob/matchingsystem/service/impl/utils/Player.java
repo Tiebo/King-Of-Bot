@@ -3,14 +3,16 @@ package com.kob.matchingsystem.service.impl.utils;
 public class Player {
     private Integer userId;
     private Integer rating;
+    private Integer botId;
     private Integer waitingTime; //等待时间
 
     public Player() {
     }
 
-    public Player(Integer userId, Integer rating, Integer waitingTime) {
+    public Player(Integer userId, Integer rating,Integer botId, Integer waitingTime) {
         this.userId = userId;
         this.rating = rating;
+        this.botId = botId;
         this.waitingTime = waitingTime;
     }
 
@@ -20,6 +22,14 @@ public class Player {
 
     public void setUserId(Integer userId) {
         this.userId = userId;
+    }
+
+    public Integer getBotId() {
+        return botId;
+    }
+
+    public void setBotId(Integer botId) {
+        this.botId = botId;
     }
 
     public Integer getRating() {
