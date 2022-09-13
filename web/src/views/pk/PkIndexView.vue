@@ -14,7 +14,7 @@ export default {
 	},
 	setup() {
 		const store = useStore();
-		const websocketUrl = `ws://localhost:3000/websocket/${store.state.user.token}`;
+		const websocketUrl = `wss://pipibr.com/websocket/${store.state.user.token}`;
 		let socket = null;
 		localStorage.removeItem("current_page");
 		store.commit("updateIsRecord", false);

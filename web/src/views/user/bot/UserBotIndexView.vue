@@ -167,7 +167,7 @@ export default {
     ace.config.set(
       "basePath",
       "https://cdn.jsdelivr.net/npm/ace-builds@" + require('ace-builds').version + "/src-noconflict/");
-    
+
     const store = useStore();
     let bots = ref([]);
     let rating = ref('');
@@ -182,7 +182,7 @@ export default {
     const refresh_bots = () => {
       $.ajax({
         type: "GET",
-        url: "http://localhost:3000/user/bot/getlist/",
+        url: "https://pipibr.com/api/user/bot/getlist/",
         headers: {
           Authorization: "Bearer " + store.state.user.token,
         },
@@ -199,7 +199,7 @@ export default {
       botAdd.error_message = "";
       $.ajax({
         type: "POST",
-        url: "http://localhost:3000/user/bot/add/",
+        url: "https://pipibr.com/api/user/bot/add/",
         data: {
           title: botAdd.title,
           description: botAdd.description,
@@ -226,7 +226,7 @@ export default {
       console.log(bot);
       $.ajax({
         type: "POST",
-        url: "http://localhost:3000/user/bot/remove/",
+        url: "https://pipibr.com/api/user/bot/remove/",
         data: {
           bot_id: bot.id,
         },
@@ -246,7 +246,7 @@ export default {
       botAdd.error_message = "";
       $.ajax({
         type: "POST",
-        url: "http://localhost:3000/user/bot/update/",
+        url: "https://pipibr.com/api/user/bot/update/",
         data: {
           bot_id: bot.id,
           title: bot.title,

@@ -1,9 +1,12 @@
 package com.kob.botrunningsystem.utils;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
-public class Bot implements com.kob.botrunningsystem.utils.BotInterface {
+public class Bot implements java.util.function.Supplier<Integer> {
 
     private final static int[] dx = {-1, 0, 1, 0}, dy = {0, 1, 0, -1};
 
@@ -17,6 +20,18 @@ public class Bot implements com.kob.botrunningsystem.utils.BotInterface {
     private boolean check_tail_increasing(int step) {
         if (step <= 10) return true;
         return step % 3 == 1;
+    }
+
+    @Override
+    public Integer get() {
+        File file = new File("input.txt");
+        try {
+            Scanner sc = new Scanner(file);
+            String input = sc.next();
+            return nextMove(input);
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public List<Cell> getCells(int sx, int sy, String steps) {
@@ -41,7 +56,6 @@ public class Bot implements com.kob.botrunningsystem.utils.BotInterface {
     private boolean judge(int x, int y, int[][] g) {
         return x >= 0 && x < 13 && y >= 0 && y < 14 && g[x][y] == 0;
     }
-    @Override
     public Integer nextMove(String input) {
         String[] strs = input.split("#");
         int[][] g = new int[13][14];
@@ -63,13 +77,7 @@ public class Bot implements com.kob.botrunningsystem.utils.BotInterface {
             int x = aCells.get(aCells.size() - 1).x + dx[i];
             int y = bCells.get(bCells.size() - 1).y + dy[i];
             if (judge(x, y, g)) {
-                for (int j = 0; j < 4; j ++ ) {
-                    int x1 = x + dx[j];
-                    int y1 = y + dy[j];
-                    if (judge(x1, y1, g)) {
-                        return i;
-                    }
-                }
+                return i;
             }
         }
         return 0;

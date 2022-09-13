@@ -34,7 +34,7 @@ export default {
     actions: {
         login(context, data) {
             $.ajax({
-                url: "http://localhost:3000/user/account/token/",
+                url: "https://pipibr.com/api/user/account/token/",
                 type: "POST",
                 data: {
                     username: data.username,
@@ -54,7 +54,7 @@ export default {
         },
         getInfo(context, data) {
             $.ajax({
-                url: "http://localhost:3000/user/account/info/",
+                url: "https://pipibr.com/api/user/account/info/",
                 type: "GET",
                 headers: {
                     authorization: "Bearer " + context.state.token,
@@ -79,7 +79,7 @@ export default {
         register(context, data) {
             $.ajax({
                 type: "POST",
-                url: "http://localhost:3000/user/account/register/",
+                url: "https://pipibr.com/api/user/account/register/",
                 data: {
                     username: data.username,
                     password: data.password,
@@ -101,7 +101,7 @@ export default {
         update_password(context, data) {
             $.ajax({
                 type: "POST",
-                url: "http://localhost:3000/user/account/update/password/",
+                url: "https://pipibr.com/api/user/account/update/password/",
                 data: {
                     oldPassword: data.old_password,
                     newPassword: data.new_password,

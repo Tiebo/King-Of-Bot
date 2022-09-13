@@ -56,7 +56,7 @@ export default {
         const refresh_bots = () => {
             $.ajax({
                 type: "GET",
-                url: "http://localhost:3000/user/bot/getlist/",
+                url: "https://pipibr.com/api/user/bot/getlist/",
                 headers: {
                     Authorization: "Bearer " + store.state.user.token,
                 },

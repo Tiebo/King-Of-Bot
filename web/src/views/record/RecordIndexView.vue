@@ -99,7 +99,7 @@ export default {
 			current_page = page;
 			$.ajax({
 				type: "GET",
-				url: "http://127.0.0.1:3000/record/getlist/",
+				url: "https://pipibr.com/api/record/getlist/",
 				data: {
 					page,
 				},

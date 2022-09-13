@@ -164,7 +164,7 @@ export default {
         const user_info = () => {
             $.ajax({
                 type: "GET",
-                url: "http://localhost:3000/user/account/info/",
+                url: "https://pipibr.com/api/user/account/info/",
                 headers: {
                     Authorization: "Bearer " + store.state.user.token,
                 },
@@ -179,7 +179,7 @@ export default {
             error_message.value = "";
             $.ajax({
                 type: "POST",
-                url: "http://localhost:3000/user/account/info/update/",
+                url: "https://pipibr.com/api/user/account/info/update/",
                 headers: {
                     Authorization: "Bearer " + store.state.user.token,
                 },

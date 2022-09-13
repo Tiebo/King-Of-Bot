@@ -13,7 +13,7 @@ import java.util.Map;
 public class GetRecordListController {
     @Autowired
     private GetRecordListService getRecordListService;
-    @GetMapping("/record/getlist/")
+    @GetMapping("/api/record/getlist/")
     public JSONObject getList(@RequestParam Map<String, String> data) {
         Integer page = Integer.valueOf(data.get("page"));
         return getRecordListService.getList(page);

@@ -13,7 +13,7 @@ public class removeBotController {
     @Autowired
     RemoveBotService removeBotService;
 
-    @PostMapping("/user/bot/remove/")
+    @PostMapping("/api/user/bot/remove/")
     Map<String, String> removeBot(@RequestParam Map<String, String> data) {
         return removeBotService.removeBot(data);
     }
