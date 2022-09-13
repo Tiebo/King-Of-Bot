@@ -41,7 +41,6 @@ export default {
         const ToPlaying = () => {
             if (nowPkStatus.value === "开始匹配") {
                 nowPkStatus.value = '取消';
-                console.log(select_bot.value);
                 store.state.pk.socket.send(JSON.stringify({
                     bot_id: select_bot.value,
                     event: "start-matching"

@@ -72,7 +72,6 @@ public class Bot implements com.kob.botrunningsystem.utils.BotInterface {
                 }
             }
         }
-        System.exit(0);
         return 0;
     }
 }

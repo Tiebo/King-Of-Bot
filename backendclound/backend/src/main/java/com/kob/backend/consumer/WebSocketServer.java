@@ -29,7 +29,7 @@ public class WebSocketServer {
     // session 来维护每一个连接
     private Session session = null;
     private User user;
-    private static UserMapper userMapper;
+    public static UserMapper userMapper;
     public static RecordMapper recordMapper;
     public static RestTemplate restTemplate;
     private static BotMapper botMapper;
